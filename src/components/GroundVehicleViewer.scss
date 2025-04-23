@@ -1,0 +1,27 @@
+#GroundVehicleViewer {
+  position: relative;
+  // width: 480px;
+  width: 100%;
+  display: flex;
+  flex-direction: column;
+  justify-content: center;
+  text-align: center;
+
+  .viewer-wrapper {
+    height: 320px;
+    // width: 480px;
+    width: 100%;
+    cursor: move;
+  }
+
+  button {
+    margin: 8px 0;
+  }
+
+  img {
+    position: absolute;
+    top: 8px;
+    left: 8px;
+    pointer-events: none;
+  }
+}

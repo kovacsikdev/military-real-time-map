@@ -1,0 +1,124 @@
+#ControlPanel {
+  position: absolute;
+  top: 50%;
+  left: -530px;
+  transform: translateY(-50%);
+  z-index: 100;
+  background-color: rgba(49, 49, 49, 0.90);
+  color: white;
+  padding: 10px;
+  border-top-right-radius: 8px;
+  border-bottom-right-radius: 8px;
+  border: 1px solid black;
+  width: 520px;
+  min-width: 64px;
+  min-height: 480px;
+  height: 90vh;
+  transition: all 0.3s ease-in-out;
+  display: flex;
+  flex-direction: column;
+
+  h2 {
+    margin: 0;
+  }
+
+  p {
+    margin: 8px 0;
+  }
+
+  .control-panel-header {
+    display: flex;
+    justify-content: space-between;
+    align-items: center;
+    border-bottom: 1px solid white;
+    padding: 8px 0;
+  }
+
+  .toggle-button {
+    width: 20px;
+    height: 100px;
+    background-color: slategray;
+    border: 1px solid black;
+    border-top-left-radius: 0;
+    border-bottom-left-radius: 0;
+    border-top-right-radius: 8px;
+    border-bottom-right-radius: 8px;
+    cursor: pointer;
+    position: absolute;
+    top: 50%;
+    right: -26px;
+    transform: translateY(-50%);
+    display: flex;
+    justify-content: center;
+    align-items: center;
+    font-size: 18px;
+    font-weight: bold;
+  }
+
+  .object {
+    &-information {
+      overflow-y: auto;
+
+      &-title {
+        padding: 8px 0;
+      }
+    }
+    &-data{
+      ul {
+        margin: 0;
+      }
+    }
+  }
+
+  .section-title {
+    margin: 8px 0;
+    padding: 8px 0;
+  }
+
+  .control-buttons {
+    display: flex;
+    justify-content: space-around;
+    margin-top: 10px;
+
+    .disabled {
+      background-color: gray;
+      cursor: progress;
+    }
+    button {
+      border: none;
+      color: black;
+      padding: 10px 20px;
+      text-align: center;
+      text-decoration: none;
+      display: inline-block;
+      font-size: 16px;
+      margin: 4px 2px;
+      cursor: pointer;
+      border-radius: 5px;
+    }
+  }
+
+  .friendly {
+    background-color: var(--color-friendly);
+  }
+  .hostile {
+    background-color: var(--color-hostile);
+  }
+  .neutral {
+    background-color: var(--color-neutral);
+  }
+}
+
+@media (max-width: 620px) {
+  #ControlPanel {
+    width: 360px;
+    left: -370px;
+  }
+}
+
+@media (max-width: 480px) {
+  #ControlPanel {
+    width: 256px;
+    left: -266px;
+  }
+}

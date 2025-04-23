@@ -1,0 +1,16 @@
+#GroundVehicleDiagnostics {
+  height: 100%;
+  width: 100%;
+  
+  .diagnostics-content {
+    width: 100%;
+    height: calc(100% - 60px);
+    overflow-y: auto;
+    overflow-x: hidden;
+  }
+
+  .vehicle-info {
+    display: flex;
+    justify-content: center;
+  }
+}

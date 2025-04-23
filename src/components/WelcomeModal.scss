@@ -1,0 +1,32 @@
+#WelcomeModal {
+  position: fixed;
+  top: 0;
+  left: 0;
+  width: 100vw;
+  height: 100vh;
+  background-color: rgba(0, 0, 0, 0.5);
+  display: flex;
+  justify-content: center;
+  align-items: center;
+  z-index: 1000;
+
+  .modal {
+    &-content {
+      padding: 20px;
+      width: 100%;
+      max-width: 512px;
+      background: black;
+      border-radius: 12px;
+    }
+    &-panels {
+      display: flex;
+      justify-content: space-between;
+      margin: 8px 0;
+    }
+    &-footer {
+      display: flex;
+      justify-content: space-between;
+      margin-top: 16px;
+    }
+  }
+}
