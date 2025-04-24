@@ -6,7 +6,8 @@ import bodyParser from 'body-parser';
 
 const app = express();
 const INITIAL_CENTER: [number, number] = [-121.519146, 48.443526];
-const PORT = 8080;
+const PORT = process.env.PORT || 8080;
+const CORS_ORIGIN = 'http://localhost:5173';
 const corsOptions = {
   origin: '*',
   optionsSuccessStatus: 200,
@@ -31,7 +32,7 @@ const generateCode = () => {
 
 app.get('/api/location-stream', (req, res) => {
   res.set({
-    'access-control-allow-origin': 'http://localhost:5173',
+    'access-control-allow-origin': CORS_ORIGIN,
     'Content-Type': 'text/event-stream',
     'Cache-Control': 'no-cache',
     'Connection': 'keep-alive',
@@ -67,7 +68,7 @@ app.get('/api/location-stream', (req, res) => {
 
 app.get('/api/command-center', (req, res) => {
   res.set({
-    'access-control-allow-origin': 'http://localhost:5173',
+    'access-control-allow-origin': CORS_ORIGIN,
   });
 
   const roomCode = generateCode();
