@@ -97,6 +97,15 @@ const drone2Start3 = turf.destination(INITIAL_CENTER, 23, -90, { units: 'miles' 
 const drone2End3 = turf.destination(INITIAL_CENTER, 24, -80, { units: 'miles' }).geometry.coordinates as [number, number];
 const drone2Results = aircraftBot([[drone2Start1, drone2End1], [drone2Start2, drone2End2], [drone2Start3, drone2End3]], 80, COORD_STREAM_RATE, 0);
 
+// Initialize drone3 coordinates
+const drone3Start1 = turf.destination(INITIAL_CENTER, 5, -125, { units: 'miles' }).geometry.coordinates as [number, number];
+const drone3End1 = turf.destination(INITIAL_CENTER, 10, -125, { units: 'miles' }).geometry.coordinates as [number, number];
+const drone3Start2 = turf.destination(INITIAL_CENTER, 10, -125, { units: 'miles' }).geometry.coordinates as [number, number];
+const drone3End2 = turf.destination(INITIAL_CENTER, 10, -90, { units: 'miles' }).geometry.coordinates as [number, number];
+const drone3Start3 = turf.destination(INITIAL_CENTER, 10, -90, { units: 'miles' }).geometry.coordinates as [number, number];
+const drone3End3 = turf.destination(INITIAL_CENTER, 5, -125, { units: 'miles' }).geometry.coordinates as [number, number];
+const drone3Results = aircraftBot([[drone3Start1, drone3End1], [drone3Start2, drone3End2], [drone3Start3, drone3End3]], 80, COORD_STREAM_RATE, 0);
+
 export const aircraftBots = {
   jetBot1: {
     coordinates: jetBot1Results,
@@ -116,4 +125,7 @@ export const aircraftBots = {
   drone2: {
     coordinates: drone2Results,
   },
+  drone3: {
+    coordinates: drone3Results,
+  }
 }

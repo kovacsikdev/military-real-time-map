@@ -68,7 +68,6 @@ app.get('/api/command-center', (req, res) => {
   const roomCode = generateCode();
   commandCenterIds[roomCode] = {
     dispositions: {
-      a9: "unknown",
       d6: "unknown",
       d7: "unknown",
       j1: "hostile"
@@ -83,6 +82,7 @@ app.get('/api/command-center', (req, res) => {
   let jetBot3Index = 0;
   let drone1Index = 0;
   let drone2Index = 0;
+  let drone3Index = 0;
 
   const intervalId = setInterval(() => {
     try {
@@ -92,7 +92,7 @@ app.get('/api/command-center', (req, res) => {
           coordinates: INITIAL_CENTER,
           bearing: 90,
           data: {
-            name: "Radio Tower",
+            name: "Tower 752",
             description: "Radio tower with a 30 mile radius",
             disposition: "friendly",
             type: "radio tower",
@@ -103,11 +103,11 @@ app.get('/api/command-center', (req, res) => {
           coordinates: [-121.519146, 48.4],
           bearing: 90,
           data: {
-            name: "Ground operator",
+            name: "Operator g2",
             description: "Ground operators with 4 man crew",
             disposition: "friendly",
             type: "ground operator",
-            linkedTo: ["t4"],
+            linkedTo: ["t4", "d8"],
           },
         },
         {
@@ -115,8 +115,8 @@ app.get('/api/command-center', (req, res) => {
           coordinates: [-121.445, 48.45],
           bearing: 90,
           data: {
-            name: "Tank",
-            description: "Tank with AA missile capabilities",
+            name: "M1 Abrams",
+            description: "Tank with 120 mm smoothbore gun, fires various rounds including armor-piercing, high-explosive, and depleted uranium projectiles",
             disposition: "friendly",
             type: "tank",
             linkedTo: ["g2"],
@@ -142,9 +142,9 @@ app.get('/api/command-center', (req, res) => {
           coordinates: [-121.7518, 48.4253],
           bearing: 90,
           data: {
-            name: "Jeep",
-            description: "Jeep with surveillance capabilities",
-            disposition: commandCenterIds[roomCode]?.dispositions?.a7 || "hostile",
+            name: "UAZ-469",
+            description: "Jeep with possible surveillance capabilities",
+            disposition: commandCenterIds[roomCode]?.dispositions?.j1 || "hostile",
             type: "vehicle",
             canChangeDisposition: true,
           },
@@ -162,9 +162,9 @@ app.get('/api/command-center', (req, res) => {
             coordinates: newCoordinates,
             bearing: aircraftBots.jetBot1.bearing,
             data: {
-              name: "Jet Fighter",
-              description: "Jet fighter with gun and missile capabilities",
-              disposition: commandCenterIds[roomCode]?.dispositions?.a7 || "unknown",
+              name: "F-22",
+              description: "Fifth-generation stealth fighter aircraft",
+              disposition: "friendly",
               type: "aircraft",
               speed: 800,
             },
@@ -184,9 +184,9 @@ app.get('/api/command-center', (req, res) => {
             coordinates: newCoordinates,
             bearing: aircraftBots.jetBot2.bearing,
             data: {
-              name: "Jet Fighter",
-              description: "Jet fighter with gun and missile capabilities",
-              disposition: commandCenterIds[roomCode]?.dispositions?.a8 || "unknown",
+              name: "F-18",
+              description: "All-weather, twin-engine, carrier-capable, multirole combat aircraft designed for both fighter and attack roles",
+              disposition: "friendly",
               type: "aircraft",
               speed: 800,
             },
@@ -206,9 +206,9 @@ app.get('/api/command-center', (req, res) => {
             coordinates: newCoordinates,
             bearing: aircraftBots.jetBot3.bearing,
             data: {
-              name: "Jet Fighter",
-              description: "Jet fighter with gun and missile capabilities",
-              disposition: commandCenterIds[roomCode]?.dispositions?.a9 || "unknown",
+              name: "A/V-8B Harrier II",
+              description: "Ground-attack aircraft capable of vertical or short takeoff and landing (V/STOL)",
+              disposition: "friendly",
               type: "aircraft",
               speed: 800,
             },
@@ -239,10 +239,10 @@ app.get('/api/command-center', (req, res) => {
         drone1Index++;
       }
 
-      if (drone2Index === aircraftBots.drone1.coordinates.length) {
+      if (drone2Index === aircraftBots.drone2.coordinates.length) {
         drone2Index = 0;
       }
-      if (drone2Index < aircraftBots.drone1.coordinates.length) {
+      if (drone2Index < aircraftBots.drone2.coordinates.length) {
         const newCoordinates = aircraftBots.drone2.coordinates[drone2Index];
         if (newCoordinates) {
           entities.push({
@@ -260,7 +260,28 @@ app.get('/api/command-center', (req, res) => {
         }
         drone2Index++;
       }
-  
+      if (drone3Index === aircraftBots.drone3.coordinates.length) {
+        drone3Index = 0;
+      }
+      if (drone3Index < aircraftBots.drone3.coordinates.length) {
+        const newCoordinates = aircraftBots.drone3.coordinates[drone3Index];
+        if (newCoordinates) {
+          entities.push({
+            id: "d8",
+            coordinates: newCoordinates,
+            bearing: 0,
+            data: {
+              name: "Bolt",
+              description: "Rapid response capability with real-time situational awareness",
+              disposition: "friendly",
+              type: "drone",
+              linkedTo: ["g2"],
+            },
+          });
+        }
+        drone3Index++;
+      }
+
       commandCenterIds[roomCode].entities = entities;
     } catch (error) {
       clearInterval(intervalId);
