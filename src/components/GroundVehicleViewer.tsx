@@ -44,7 +44,6 @@ export const GroundVehicleViewer: React.FC = () => {
 
     controlsRef.current = new OrbitControls(camera, renderer.domElement);
     controlsRef.current.enableDamping = true; // an animation loop is required when either damping or auto-rotation are enabled
-    // controlsRef.current.enablePan = false; // Set to false to disable panning
     controlsRef.current.maxDistance = 150; // Set maximum zoom level
     controlsRef.current.minDistance = 60; // Set minimum zoom level
 

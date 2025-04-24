@@ -17,10 +17,6 @@ export const Map = (props: MapProps) => {
   const { setSelectedEntity } = props;
 
   const INITIAL_CENTER: [number, number] = [-121.519146, 48.443526];
-  /**
-   * * Initial bounds for the map. This is a bounding box that defines the area of the map that will be displayed.
-   * * The coordinates are in the format: west, south, east, north
-   */
   const INITIAL_BOUNDS: [number, number, number, number] = [
     -124, 46, -119, 51,
   ];
@@ -73,7 +69,6 @@ export const Map = (props: MapProps) => {
         const mapCenter = mapRef.current.getCenter();
         const mapZoom = mapRef.current.getZoom();
 
-        // update state
         setCenter([mapCenter.lng, mapCenter.lat]);
         setZoom(mapZoom);
       }
