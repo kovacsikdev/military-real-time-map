@@ -5,4 +5,7 @@ import react from '@vitejs/plugin-react'
 export default defineConfig({
   plugins: [react()],
   base: '/military-real-time-map/',
+  build: {
+    chunkSizeWarningLimit: 160000000000,
+  }
 })

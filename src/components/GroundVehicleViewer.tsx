@@ -53,7 +53,7 @@ export const GroundVehicleViewer: React.FC = () => {
     
     // Load Tank Model
     new OBJLoader().load(
-      "https://github.com/kovacsikdev/military-real-time-map/tree/refs/heads/main/public/models/models/tank.obj",
+      "/military-real-time-map/models/tank.obj",
       (object: THREE.Object3D) => {
         object.traverse((child: THREE.Object3D) => {
           if ((child as THREE.Mesh).isMesh) {
@@ -77,7 +77,7 @@ export const GroundVehicleViewer: React.FC = () => {
 
     // Load Fuel Tank Model
     new OBJLoader().load(
-      "https://github.com/kovacsikdev/military-real-time-map/tree/refs/heads/main/public/models/tank_fuel.obj",
+      "/military-real-time-map/models/tank_fuel.obj",
       (object: THREE.Object3D) => {
         object.traverse((child: THREE.Object3D) => {
           if ((child as THREE.Mesh).isMesh) {
@@ -99,7 +99,7 @@ export const GroundVehicleViewer: React.FC = () => {
 
     // Load Radio Tank Model
     new OBJLoader().load(
-      "https://github.com/kovacsikdev/military-real-time-map/tree/refs/heads/main/public/models/tank_radio.obj",
+      "/military-real-time-map/models/tank_radio.obj",
       (object: THREE.Object3D) => {
         object.traverse((child: THREE.Object3D) => {
           if ((child as THREE.Mesh).isMesh) {
@@ -121,7 +121,7 @@ export const GroundVehicleViewer: React.FC = () => {
 
     // Load Electronics Tank Model
     new OBJLoader().load(
-      "https://github.com/kovacsikdev/military-real-time-map/tree/refs/heads/main/public/models/tank_electronics.obj",
+      "/military-real-time-map/models/tank_electronics.obj",
       (object: THREE.Object3D) => {
         object.traverse((child: THREE.Object3D) => {
           if ((child as THREE.Mesh).isMesh) {
