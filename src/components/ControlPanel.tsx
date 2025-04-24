@@ -5,10 +5,11 @@ import "./ControlPanel.scss";
 
 type ControlPanelProps = {
   clearMarker: () => void;
+  autoOpenPanel?: boolean;
 };
 
-export const ControlPanel: React.FC<ControlPanelProps> = ({ clearMarker }) => {
-  const [isVisible, setIsVisible] = useState(false);
+export const ControlPanel: React.FC<ControlPanelProps> = ({ clearMarker, autoOpenPanel }) => {
+  const [isVisible, setIsVisible] = useState(autoOpenPanel); // auto open once if the window is large enough
   const [isCoreDataVisible, setIsCoreDataVisible] = useState(true);
   const [isRulesVisible, setIsRulesVisible] = useState(false);
   const [updatingDisposition, setUpdatingDisposition] = useState(false);

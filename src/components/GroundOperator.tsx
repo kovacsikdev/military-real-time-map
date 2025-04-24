@@ -5,10 +5,14 @@ import { GroundVehicleDiagnostics } from "./GroundVehicleDiagnostics";
 import { TankDiagnosticsType } from "../types/Markers";
 import "./GroundOperator.scss";
 
-export const GroundOperator: React.FC = () => {
-  const { selectedEntity } = useContext(EntityDataContext);
+type GroundOperatorProps = {
+  autoOpenPanel?: boolean;
+}
+
+export const GroundOperator: React.FC<GroundOperatorProps> = ({ autoOpenPanel }) => {
+  const { selectedEntity } = useContext(EntityDataContext); // auto open once if the window is large enough
   const [isDiagnostics, setIsDiagnostics] = useState(false);
-  const [isVisible, setIsVisible] = useState(false);
+  const [isVisible, setIsVisible] = useState(autoOpenPanel);
 
   const togglePanel = () => {
     setIsVisible(!isVisible);

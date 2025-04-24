@@ -13,6 +13,16 @@ function App() {
   const [roomCode, setRoomCode] = useState<string>("");
   const [displayMap, setDisplayMap] = useState(false);
   const [displayWelcomeModal, setDisplayWelcomeModal] = useState(false);
+  const [autoOpenPanel, setAutoOpenPanel] = useState(false);
+
+  // Auto open panels if the screen is large enough
+  const autoOpenPanels = () => {
+    const screenWidth = window.innerWidth;
+
+    if (screenWidth > 1408) {
+      setAutoOpenPanel(true);
+    }
+  }
 
   useEffect(() => {
     const hideWelcomeMessage = localStorage.getItem('kovacsik-military-real-time-map-welcome');
@@ -29,6 +39,7 @@ function App() {
         console.log("Command center room code:", data.roomCode);
         setRoomCode(data.roomCode);
         setDisplayMap(true);
+        autoOpenPanels();
       })
       .catch(error => console.error('Error:', error));
   }, []);
@@ -40,8 +51,9 @@ function App() {
         <EntityDataContext.Provider value={{ selectedEntity, roomCode}}>
           <ControlPanel
             clearMarker={() => {setSelectedEntity(null)}}
+            autoOpenPanel={autoOpenPanel}
           />
-          <GroundOperator />
+          <GroundOperator autoOpenPanel={autoOpenPanel}/>
           <Map
             setSelectedEntity={setSelectedEntity}
           />
