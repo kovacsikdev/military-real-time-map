@@ -2,14 +2,15 @@ import React, { useState, useEffect, useContext } from "react";
 import { EntityDataContext } from "../libs/context";
 import { getIcon } from "../libs/helpers";
 import { GroundVehicleDiagnostics } from "./GroundVehicleDiagnostics";
-import { TankDiagnosticsType } from "../types/Markers";
 import "./GroundOperator.scss";
 
 type GroundOperatorProps = {
   autoOpenPanel?: boolean;
-}
+};
 
-export const GroundOperator: React.FC<GroundOperatorProps> = ({ autoOpenPanel }) => {
+export const GroundOperator: React.FC<GroundOperatorProps> = ({
+  autoOpenPanel,
+}) => {
   const { selectedEntity } = useContext(EntityDataContext); // auto open once if the window is large enough
   const [isDiagnostics, setIsDiagnostics] = useState(false);
   const [isVisible, setIsVisible] = useState(autoOpenPanel);
@@ -22,28 +23,13 @@ export const GroundOperator: React.FC<GroundOperatorProps> = ({ autoOpenPanel })
       if (selectedEntity.data.type === "tank") {
         setIsDiagnostics(true);
       } else {
-      setIsDiagnostics(false);
-    }
+        setIsDiagnostics(false);
+      }
     } else {
       setIsDiagnostics(false);
     }
   }, [selectedEntity]);
 
-  const sampleDiagnostics: TankDiagnosticsType = {
-    fuel: 25,
-    ammo: 80,
-    recommendations: [
-      "Check fuel levels",
-    ],
-    health: {
-      engine: 90,
-      tracks: 85,
-      turret: 80,
-      hull: 95,
-      radio: 70,
-      electronics: 60,
-    },
-  };
   return (
     <div id="GroundOperator" style={{ right: isVisible ? "0" : "" }}>
       <button className="toggle-button" onClick={togglePanel}>
@@ -51,7 +37,9 @@ export const GroundOperator: React.FC<GroundOperatorProps> = ({ autoOpenPanel })
       </button>
       {isVisible && (
         <>
-          {isDiagnostics && <GroundVehicleDiagnostics {...sampleDiagnostics} />}
+          {isDiagnostics && selectedEntity?.data?.tankStatus && (
+            <GroundVehicleDiagnostics {...selectedEntity?.data?.tankStatus} />
+          )}
           {!isDiagnostics && (
             <>
               <div className="header">
