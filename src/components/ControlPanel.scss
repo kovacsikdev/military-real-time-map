@@ -35,8 +35,8 @@
   }
 
   .toggle-button {
-    width: 20px;
-    height: 100px;
+    width: 40px;
+    height: 200px;
     background-color: slategray;
     border: 1px solid black;
     border-top-left-radius: 0;
@@ -46,7 +46,7 @@
     cursor: pointer;
     position: absolute;
     top: 50%;
-    right: -26px;
+    right: -40px;
     transform: translateY(-50%);
     display: flex;
     justify-content: center;

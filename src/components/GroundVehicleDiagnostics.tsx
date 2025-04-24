@@ -7,7 +7,7 @@ import "./GroundVehicleDiagnostics.scss";
 export const GroundVehicleDiagnostics = (props: TankDiagnosticsType) => {
   const { fuel, ammo, recommendations, health } = props;
   const [displayHealthDiagnostics, setDisplayHealthDiagnostics] =
-    useState(false);
+    useState(true);
   const [displayRecommendations, setDisplayRecommendations] = useState(false);
 
   const toggleHealthDiagnostics = () => {
