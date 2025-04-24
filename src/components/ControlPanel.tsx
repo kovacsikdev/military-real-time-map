@@ -1,5 +1,6 @@
 import React, { useState, useContext } from "react";
 import { EntityDataContext } from "../libs/context";
+import { getEndpoint } from "../libs/helpers";
 import "./ControlPanel.scss";
 
 type ControlPanelProps = {
@@ -33,7 +34,7 @@ export const ControlPanel: React.FC<ControlPanelProps> = ({ clearMarker }) => {
         `Updating disposition of ${selectedEntity.id} to ${disposition}`
       );
       setUpdatingDisposition(true);
-      fetch("http://localhost:8080/api/update-disposition", {
+      fetch(`${getEndpoint()}/api/update-disposition`, {
         method: "POST",
         headers: {
           "Content-Type": "application/json",

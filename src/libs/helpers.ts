@@ -214,3 +214,9 @@ export const setupMapPaint = (mapRef: any) => {
     }
   });
 }
+
+export const getEndpoint = () => {
+  const env = import.meta.env.PROD;
+  const endpoint = env ? import.meta.env.VITE_PROD_ENDPOINT : "http://localhost:8080";
+  return endpoint;
+}

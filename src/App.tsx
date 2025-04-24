@@ -5,6 +5,7 @@ import { GroundOperator } from './components/GroundOperator';
 import { WelcomeModal } from './components/WelcomeModal';
 import { MarkerType } from './types/Markers';
 import { EntityDataContext } from './libs/context';
+import { getEndpoint } from './libs/helpers';
 import './App.css';
 
 function App() {
@@ -22,8 +23,7 @@ function App() {
     }
 
     if (roomCode) return; // Prevent multiple fetch calls
-    
-    fetch("http://localhost:8080/api/command-center")
+    fetch(`${getEndpoint()}/api/command-center`)
       .then(response => response.json())
       .then(data => {
         console.log("Command center room code:", data.roomCode);

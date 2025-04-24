@@ -1,6 +1,7 @@
 import { useEffect, useState, useContext } from "react";
 import { MarkerType, DispositionTypes } from "../types/Markers";
 import { EntityDataContext } from "../libs/context";
+import { getEndpoint } from "../libs/helpers";
 
 export const useEntityData = () => {
   const [entityData, setEntityData] = useState<MarkerType[]>([]);
@@ -10,7 +11,7 @@ export const useEntityData = () => {
   useEffect(() => {
     console.log(`Connecting to SSE stream with room code ${roomCode}...`);
     const eventSource = new EventSource(
-      `http://localhost:8080/api/location-stream?room=${roomCode}&role=command-center`
+      `${getEndpoint()}/api/location-stream?room=${roomCode}&role=command-center`
     );
 
     eventSource.onmessage = (event) => {
