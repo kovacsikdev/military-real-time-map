@@ -26,6 +26,7 @@ export type MarkerDataType = {
   speed?: number; // Speed in miles per hour
   canChangeDisposition?: boolean; // Flag to indicate if the entity can change its disposition
   tankStatus?: TankDiagnosticsType; // Optional tank status for tank entities
+  issue?: boolean; // Flag to indicate if there is an issue with the entity
 }
 
 export type MarkerType = {
