@@ -134,7 +134,8 @@ app.get('/api/command-center', (req, res) => {
                 radio: 70,
                 electronics: 60,
               },
-            }
+            },
+            issue: true
           },
         },
         {
