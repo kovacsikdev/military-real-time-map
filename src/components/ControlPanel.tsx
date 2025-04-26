@@ -11,7 +11,7 @@ type ControlPanelProps = {
 export const ControlPanel: React.FC<ControlPanelProps> = ({ clearMarker, autoOpenPanel }) => {
   const [isVisible, setIsVisible] = useState(autoOpenPanel); // auto open once if the window is large enough
   const [isCoreDataVisible, setIsCoreDataVisible] = useState(true);
-  const [isRulesVisible, setIsRulesVisible] = useState(false);
+  const [isRulesVisible, setIsRulesVisible] = useState(true);
   const [updatingDisposition, setUpdatingDisposition] = useState(false);
 
   const { selectedEntity, roomCode } = useContext(EntityDataContext);
