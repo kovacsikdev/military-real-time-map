@@ -20,7 +20,7 @@ export const Map = (props: MapProps) => {
   const INITIAL_BOUNDS: [number, number, number, number] = [
     -124, 46, -119, 51,
   ];
-  const INITIAL_ZOOM = 10.12;
+  const INITIAL_ZOOM = 8;
 
   const { entityData, dispositionData } = useEntityData();
   const { selectedEntity } = useContext(EntityDataContext);
