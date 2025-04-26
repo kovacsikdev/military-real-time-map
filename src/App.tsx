@@ -19,7 +19,7 @@ function App() {
   const autoOpenPanels = () => {
     const screenWidth = window.innerWidth;
 
-    if (screenWidth > 1408) {
+    if (screenWidth > 1400) {
       setAutoOpenPanel(true);
     }
   }
