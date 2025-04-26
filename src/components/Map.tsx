@@ -11,15 +11,13 @@ import { MarkerType } from "../types/Markers";
 
 type MapProps = {
   setSelectedEntity: (entity: MarkerType | null) => void;
-}
+};
 
 export const Map = (props: MapProps) => {
   const { setSelectedEntity } = props;
 
   const INITIAL_CENTER: [number, number] = [-121.519146, 48.443526];
-  const INITIAL_BOUNDS: [number, number, number, number] = [
-    -124, 46, -119, 51,
-  ];
+  const INITIAL_BOUNDS: [number, number, number, number] = [-124, 46, -119, 51];
   const INITIAL_ZOOM = 8;
 
   const { entityData, dispositionData } = useEntityData();
@@ -41,12 +39,116 @@ export const Map = (props: MapProps) => {
     setSelectedEntity(null);
   };
 
+  const addEntityMarker = (data: MarkerType) => {
+    const currentZoom = mapRef.current?.getZoom() || 0;
+      const markerSize = currentZoom < 10 ? 32 : 48; // smaller size for zoom < 10
+      const div = document.createElement("div");
+      div.className = "custom-marker";
+      div.style.width = `${markerSize}px`;
+      div.style.height = `${markerSize}px`;
+
+      const img = document.createElement("img");
+      img.style.width = "100%";
+      img.style.height = "100%";
+      img.style.transform = `rotate(${
+        turf.bearingToAzimuth(data.bearing) - 90
+      }deg)`;
+
+      switch (data.data.type) {
+        case "drone":
+          img.src = getIcon("drone", data.data.disposition);
+          break;
+        case "vehicle":
+          img.src = getIcon("vehicle", data.data.disposition);
+          break;
+        case "aircraft":
+          img.src = getIcon("aircraft", data.data.disposition);
+          break;
+        case "tank":
+          img.src = getIcon("tank", data.data.disposition);
+          break;
+        case "radio tower":
+          img.src = getIcon("radio tower", data.data.disposition);
+          break;
+        case "ground operator":
+          img.src = getIcon("ground operator", data.data.disposition);
+          break;
+        default:
+          return;
+      }
+
+      div.appendChild(img);
+      div.appendChild(document.createElement("div"));
+
+      // Add click event to toggle "custom-marker-selected" class
+      div.addEventListener("click", () => {
+        setSelectedEntity(data);
+        const allMarkers = document.querySelectorAll(".custom-marker");
+        allMarkers.forEach((marker) =>
+          marker.classList.remove("custom-marker-selected")
+        );
+        div.classList.add("custom-marker-selected");
+      });
+
+      const marker = new mapboxgl.Marker({ element: div })
+        .setLngLat([data.coordinates[0], data.coordinates[1]])
+        .addTo(mapRef.current!);
+
+      existingMarkers.current[data.id] = marker;
+  }
+
+  const updateEntityMarker = (data: MarkerType) => {
+    // Update marker coordinates if it already exists
+    existingMarkers.current[data.id].setLngLat([
+      data.coordinates[0],
+      data.coordinates[1],
+    ]);
+
+    const markerElement = existingMarkers.current[data.id]._element
+      .children[0] as HTMLElement;
+    markerElement.style.transform = `rotate(${
+      turf.bearingToAzimuth(data.bearing) - 90
+    }deg)`;
+
+    // Update issue mark if entity has an issue
+    if (data.data.issue) {
+      existingMarkers.current[data.id]._element.children[1].classList.add(
+        "issue-mark"
+      );
+    } else {
+      existingMarkers.current[
+        data.id
+      ]._element.children[1].classList.remove("issue-mark");
+    }
+  }
+  
+  const updateMarkers = () => {
+    entityData.forEach((data) => {
+      const markerId = data.id;
+      if (existingMarkers.current[markerId]) {
+        updateEntityMarker(data);
+      } else {
+        addEntityMarker(data);
+      }
+    });
+  };
+
   useEffect(() => {
     if (selectedEntity === null) {
       const allMarkers = document.querySelectorAll(".custom-marker");
-      allMarkers.forEach((marker) => marker.classList.remove("custom-marker-selected"));
-    } 
-  }, [selectedEntity]);
+      allMarkers.forEach((marker) =>
+        marker.classList.remove("custom-marker-selected")
+      );
+    } else {
+      entityData.forEach((data) => {
+        const markerId = data.id;
+        // Update selectedMarker if it matches the current marker
+        if (selectedEntity?.id === markerId) {
+          setSelectedEntity(data);
+        }
+      });
+    }
+  }, [selectedEntity, entityData]);
 
   useEffect(() => {
     if (mapRef.current) return; // initialize map only once
@@ -109,7 +211,7 @@ export const Map = (props: MapProps) => {
       }
     });
   }, [dispositionData]);
-  
+
   useEffect(() => {
     if (!mapRef.current) return; // wait for map to initialize
     if (entityData.length === 0) return; // wait for entity data to load
@@ -126,77 +228,6 @@ export const Map = (props: MapProps) => {
         delete existingMarkers.current[markerId];
       }
     });
-
-    const updateMarkers = () => {
-      entityData.forEach((data) => {
-        const markerId = data.id;
-        if (existingMarkers.current[markerId]) {
-          // Update marker coordinates if it already exists
-          existingMarkers.current[markerId]
-            .setLngLat([data.coordinates[0], data.coordinates[1]]);
-
-          const markerElement = existingMarkers.current[markerId]._element.children[0] as HTMLElement;
-          markerElement.style.transform = `rotate(${turf.bearingToAzimuth(data.bearing) - 90}deg)`;
-
-          // Update selectedMarker if it matches the current marker
-          if (selectedEntity?.id === markerId) {
-            setSelectedEntity(data);
-          }
-        } else {
-          const currentZoom = mapRef.current?.getZoom() || 0;
-          const markerSize = currentZoom < 10 ? 32 : 48; // smaller size for zoom < 10
-          // Create a new marker if it doesn't exist
-          const div = document.createElement("div");
-          div.className = "custom-marker";
-          div.style.width = `${markerSize}px`;
-          div.style.height = `${markerSize}px`;
-
-          const img = document.createElement("img");
-          img.style.width = "100%";
-          img.style.height = "100%";
-          img.style.transform = `rotate(${turf.bearingToAzimuth(data.bearing) - 90}deg)`;
-
-          switch (data.data.type) {
-            case "drone":
-              img.src = getIcon("drone", data.data.disposition);
-              break;
-            case "vehicle":
-              img.src = getIcon("vehicle", data.data.disposition);;
-              break;
-            case "aircraft":
-              img.src = getIcon("aircraft", data.data.disposition);;
-              break;
-            case "tank":
-              img.src = getIcon("tank", data.data.disposition);;
-              break;
-            case "radio tower":
-              img.src = getIcon("radio tower", data.data.disposition);;
-              break;
-            case "ground operator":
-              img.src = getIcon("ground operator", data.data.disposition);;
-              break;
-            default:
-              return;
-          }
-
-          div.appendChild(img);
-
-          // Add click event to toggle "custom-marker-selected" class
-          div.addEventListener("click", () => {
-            setSelectedEntity(data);
-            const allMarkers = document.querySelectorAll(".custom-marker");
-            allMarkers.forEach((marker) => marker.classList.remove("custom-marker-selected"));
-            div.classList.add("custom-marker-selected");
-          });
-
-          const marker = new mapboxgl.Marker({ element: div })
-            .setLngLat([data.coordinates[0], data.coordinates[1]])
-            .addTo(mapRef.current!);
-
-          existingMarkers.current[markerId] = marker;
-        }
-      });
-    };
 
     // Use requestAnimationFrame to batch updates
     requestAnimationFrame(updateMarkers);
