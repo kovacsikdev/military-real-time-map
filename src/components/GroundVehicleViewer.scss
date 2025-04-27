@@ -1,6 +1,5 @@
 #GroundVehicleViewer {
   position: relative;
-  // width: 480px;
   width: 100%;
   display: flex;
   flex-direction: column;
@@ -9,7 +8,6 @@
 
   .viewer-wrapper {
     height: 320px;
-    // width: 480px;
     width: 100%;
     cursor: move;
   }

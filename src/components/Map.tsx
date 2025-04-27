@@ -163,6 +163,7 @@ export const Map = (props: MapProps) => {
       maxBounds: INITIAL_BOUNDS, // [w, s, e, n]
       minZoom: 6,
       maxZoom: 15,
+      dragRotate: false,
     });
 
     mapRef.current.on('click', (e) => {
