@@ -163,8 +163,10 @@ export const Map = (props: MapProps) => {
       minZoom: 6,
       maxZoom: 15,
       dragRotate: false,
-      touchZoomRotate: false,
+      touchPitch: false
     });
+
+    mapRef.current.touchZoomRotate.disableRotation(); // Disable rotation on touch devices
 
     mapRef.current.on('click', (e) => {
       e.preventDefault();
