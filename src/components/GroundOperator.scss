@@ -1,8 +1,7 @@
 #GroundOperator {
   position: absolute;
-  top: 50%;
-  right: -530px;
-  transform: translateY(-50%);
+  top: 0;
+  right: -100%;
   z-index: 100;
   background-color: rgba(49, 49, 49, 0.90);
   color: white;
@@ -11,9 +10,7 @@
   border-bottom-left-radius: 8px;
   border: 1px solid black;
   width: 520px;
-  min-height: 480px;
-  height: 90vh;
-  transition: right 0.3s ease-in-out;
+  transition: all 0.3s ease-in-out;
   display: flex;
   flex-direction: column;
 
@@ -80,16 +77,10 @@
   }
 }
 
-@media (max-width: 620px) {
+@media (max-width: 1200px) {
   #GroundOperator {
-    width: 360px;
-    right: -370px;
-  }
-}
-
-@media (max-width: 480px) {
-  #GroundOperator {
-    width: 256px;
-    right: -266px;
+    width: calc(100% - 20px);
+    top: calc(60vh - 20px);
+    height: 40vh;
   }
 }

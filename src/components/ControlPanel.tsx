@@ -1,24 +1,15 @@
-import React, { useState, useContext } from "react";
+import React, { useState, useContext, useEffect } from "react";
 import { EntityDataContext } from "../libs/context";
 import { getEndpoint } from "../libs/helpers";
 import "./ControlPanel.scss";
 
-type ControlPanelProps = {
-  clearMarker: () => void;
-  autoOpenPanel?: boolean;
-};
-
-export const ControlPanel: React.FC<ControlPanelProps> = ({ clearMarker, autoOpenPanel }) => {
-  const [isVisible, setIsVisible] = useState(autoOpenPanel); // auto open once if the window is large enough
+export const ControlPanel: React.FC = () => {
+  const [isVisible, setIsVisible] = useState(false);
   const [isCoreDataVisible, setIsCoreDataVisible] = useState(true);
   const [isRulesVisible, setIsRulesVisible] = useState(true);
   const [updatingDisposition, setUpdatingDisposition] = useState(false);
 
   const { selectedEntity, roomCode } = useContext(EntityDataContext);
-
-  const togglePanel = () => {
-    setIsVisible(!isVisible);
-  };
 
   const toggleCoreData = () => {
     setIsCoreDataVisible(!isCoreDataVisible);
@@ -56,17 +47,18 @@ export const ControlPanel: React.FC<ControlPanelProps> = ({ clearMarker, autoOpe
     }
   };
 
+  useEffect(() => {
+    if (selectedEntity) {
+      setIsVisible(true);
+    } else {
+      setIsVisible(false);
+    }
+  }, [selectedEntity]);
+
   return (
     <div id="ControlPanel" style={{ left: isVisible ? "0" : "" }}>
-      <button className="toggle-button" onClick={togglePanel}>
-        {isVisible ? "▼" : "◀"}
-      </button>
       {isVisible && (
         <>
-          <div className="control-panel-header">
-            <h2>Control Panel</h2>
-            <button onClick={clearMarker}>Clear selection</button>
-          </div>
           {/* TODO: Implement a chat room for ground}
           {/* <div>
             <h2>Room</h2>
@@ -142,7 +134,7 @@ export const ControlPanel: React.FC<ControlPanelProps> = ({ clearMarker, autoOpe
                       <div>
                         <p>
                           Mark disposition as (updates status of object for
-                          everyone):
+                          everyone viewing map):
                         </p>
                         <div className="control-buttons">
                           <button

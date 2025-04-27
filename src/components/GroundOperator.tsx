@@ -4,37 +4,29 @@ import { getIcon } from "../libs/helpers";
 import { GroundVehicleDiagnostics } from "./GroundVehicleDiagnostics";
 import "./GroundOperator.scss";
 
-type GroundOperatorProps = {
-  autoOpenPanel?: boolean;
-};
 
-export const GroundOperator: React.FC<GroundOperatorProps> = ({
-  autoOpenPanel,
-}) => {
+export const GroundOperator: React.FC = () => {
   const { selectedEntity } = useContext(EntityDataContext); // auto open once if the window is large enough
   const [isDiagnostics, setIsDiagnostics] = useState(false);
-  const [isVisible, setIsVisible] = useState(autoOpenPanel);
+  const [isVisible, setIsVisible] = useState(false);
 
-  const togglePanel = () => {
-    setIsVisible(!isVisible);
-  };
   useEffect(() => {
     if (selectedEntity) {
       if (selectedEntity.data.type === "tank") {
         setIsDiagnostics(true);
+        setIsVisible(true);
       } else {
         setIsDiagnostics(false);
+        setIsVisible(false);
       }
     } else {
       setIsDiagnostics(false);
+      setIsVisible(false);
     }
   }, [selectedEntity]);
 
   return (
     <div id="GroundOperator" style={{ right: isVisible ? "0" : "" }}>
-      <button className="toggle-button" onClick={togglePanel}>
-        {isVisible ? "▼" : "▶"}
-      </button>
       {isVisible && (
         <>
           {isDiagnostics && selectedEntity?.data?.tankStatus && (

@@ -170,6 +170,8 @@ export const GroundVehicleViewer: React.FC = () => {
     // Cleanup
     return () => {
       containerRef.current?.removeChild(renderer.domElement);
+      renderer.dispose();
+      renderer.forceContextLoss();
     };
   }, []);
 

@@ -18,14 +18,10 @@ export const WelcomeModal = (props: WelcomeModalProps) => {
         <p className="modal-message">
           This real time map is designed to provide you with the latest information about the current state of the battlefield.
           <br /><br />
-          Aircraft, ground vehicles and ground operators are represented by icons on the map, and you can click on them to view their details.
-          <br /><br />
           Real time position updates are provided by the Command Center, which is a mock server that simulates real time data. Positions use real world speed.
         </p>
         <div className='modal-panels'>
-          <div>{`<---`}</div>
-          <div>Use the left and right panels for info</div>
-          <div>{`--->`}</div>
+          <div>Select an icon to view it's data</div>
         </div>
         <div className='modal-footer'>
           <div className="modal-checkbox">

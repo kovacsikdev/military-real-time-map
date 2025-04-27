@@ -15,6 +15,9 @@
   --color-friendly: #62EA8B;
   --color-hostile: #f85025;
   --color-neutral: #f3f349;
+  
+  --selected-border-color: rgba(255, 255, 255, 0.75);
+  --selected-border-width: 4px;
 }
 
 a {

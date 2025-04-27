@@ -18,7 +18,7 @@ export const Map = (props: MapProps) => {
 
   const INITIAL_CENTER: [number, number] = [-121.519146, 48.443526];
   const INITIAL_BOUNDS: [number, number, number, number] = [-124, 46, -119, 51];
-  const INITIAL_ZOOM = 8;
+  const INITIAL_ZOOM = 9;
 
   const { entityData, dispositionData } = useEntityData();
   const { selectedEntity } = useContext(EntityDataContext);
@@ -80,15 +80,15 @@ export const Map = (props: MapProps) => {
       div.appendChild(img);
       div.appendChild(document.createElement("div"));
 
-      // Add click event to toggle "custom-marker-selected" class
-      div.addEventListener("click", () => {
+      div.addEventListener("click", (e) => {
+        e.stopPropagation();
         setSelectedEntity(data);
         const allMarkers = document.querySelectorAll(".custom-marker");
         allMarkers.forEach((marker) =>
           marker.classList.remove("custom-marker-selected")
         );
         div.classList.add("custom-marker-selected");
-      });
+      }, false);
 
       const marker = new mapboxgl.Marker({ element: div })
         .setLngLat([data.coordinates[0], data.coordinates[1]])
@@ -163,6 +163,11 @@ export const Map = (props: MapProps) => {
       maxBounds: INITIAL_BOUNDS, // [w, s, e, n]
       minZoom: 6,
       maxZoom: 15,
+    });
+
+    mapRef.current.on('click', (e) => {
+      e.preventDefault();
+      setSelectedEntity(null); // Deselect marker on map click
     });
 
     mapRef.current.on("move", () => {
