@@ -164,6 +164,7 @@ export const Map = (props: MapProps) => {
       minZoom: 6,
       maxZoom: 15,
       dragRotate: false,
+      touchZoomRotate: false,
     });
 
     mapRef.current.on('click', (e) => {
