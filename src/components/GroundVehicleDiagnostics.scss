@@ -14,3 +14,9 @@
     justify-content: center;
   }
 }
+
+@media (max-width: 1200px) {
+  .vehicle-info {
+    width: 90%;
+  }
+}
