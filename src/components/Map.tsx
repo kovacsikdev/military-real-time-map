@@ -15,7 +15,7 @@ type MapProps = {
 
 export const Map = (props: MapProps) => {
   const { setSelectedEntity } = props;
-
+  const MAP_API = import.meta.env.VITE_MAP_API;
   const INITIAL_CENTER: [number, number] = [-121.519146, 48.443526];
   const INITIAL_BOUNDS: [number, number, number, number] = [-124, 46, -119, 51];
   const INITIAL_ZOOM = 9;
@@ -152,9 +152,8 @@ export const Map = (props: MapProps) => {
 
   useEffect(() => {
     if (mapRef.current) return; // initialize map only once
-
-    mapboxgl.accessToken =
-      "pk.eyJ1Ijoia292YWNzaWsiLCJhIjoiY205azkxNDdtMGh0bDJrb29zNHo0aG9raCJ9.pOBRlnG-d73NfEFTNYH3Yw";
+    
+    mapboxgl.accessToken = MAP_API;
     mapRef.current = new mapboxgl.Map({
       container: mapContainer.current as unknown as HTMLElement,
       style: "mapbox://styles/mapbox/satellite-streets-v12",
